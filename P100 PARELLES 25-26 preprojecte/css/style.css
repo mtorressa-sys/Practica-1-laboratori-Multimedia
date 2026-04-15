@@ -1,0 +1,103 @@
+body {
+    text-align: center;
+    background: #9e9e9e url(../images/fons.webp);
+    color: #4A4A4A;
+}
+
+#tauler {
+    border-radius: 10px;
+    border: 1px solid #666;
+    position: relative;
+    background: #232 url(../images/table.jpg);
+    margin: 0 auto;
+    box-shadow: 0 -1px 0 #999, 0 1px 0 #999, inset 0;
+}
+
+.carta {
+    width: 80px;	height: 120px;   /* deck */
+    /* width: 111px; height: 111px;  /* pokemon */
+    /* width: 79px;	height: 123px;   /* poker1 */
+    
+    position: absolute;
+    -webkit-perspective: 300px; /* Chrome, Safari, Opera  */
+    perspective: 300px;/*transition: all .3s; */
+}
+
+.carta:hover .cara{
+    box-shadow: 0 0 10px #aaa;
+}
+
+.cara {
+    border-radius: 10px;
+    width: 100%;	height: 100%;
+    position: absolute;  /* per poder moure la carta */
+
+    transition-property: transform, shadow;
+    transition-duration: .5s;
+
+    backface-visibility: hidden;
+}
+
+.darrera {
+    background: #999 url(../images/deck.png) 0px -480px; /*cartes DECK*/
+    /*background: #999 url(../images/poker1.png) 0px -496px; /*cartes POKER1*/
+}
+
+.davant {
+    background: #efefef url(../images/deck.png);/*cartes DECK*/
+    /*background: #999 url(../images/poker1.png); /*cartes POKER1*/
+    transform: rotate3d(0,1,0,-180deg);
+}
+
+
+.carta-girada .darrera {
+    transform: rotate3d(0,1,0,180deg);
+}
+
+.carta-girada .davant {
+    transform: rotate3d(0,1,0,0deg);
+}
+
+/* deck */
+/* fila 120 - columna 80) */
+.carta1 {background-position: 0 0;}
+.carta2 {background-position: -80px 0;} 
+.carta3 {background-position: -160px 0;}
+.carta4 {background-position: -240px 0;}
+.carta5 {background-position: -320px 0;}
+/*...*/
+.carta14 {background-position: 0 -120;}
+.carta15 {background-position: -80px -120px;}
+.carta16 {background-position: -160px -120px;}
+/*...*/
+.carta24 {background-position: -800px -120px;}
+.carta25 {background-position: -880px -120px;}
+.carta26 {background-position: -960px -120px;}
+/*...*/
+
+/* pokemon */
+/* fila 111 - columna 111 
+.carta1{background-position:    0       0; }
+.carta2{background-position: -111px     0; }
+.carta3{background-position: -222px     0; }
+.carta4{background-position: -333px     0; }
+.carta5{background-position: -444px     0; }
+.carta6{background-position: -555px     0; }
+.carta7{background-position: -666px     0; }
+.carta8{background-position:   -0    -111px; }
+
+
+/* poker1 */
+/* fila 124 - columna 79 
+.carta1{background-position:    0     0  ; }
+.carta2{background-position:  -79px   0  ; }
+.carta3{background-position: -158px   0  ; }
+/*...
+.carta14{background-position:    0    -124px; }
+.carta15{background-position:  -79px  -124px; }
+.carta16{background-position:  -158px -124px; }
+/*...
+.carta39{background-position:    -948px -248px; }
+/*...
+.carta40{background-position:    0   -372px; }
+/*...*/
