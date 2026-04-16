@@ -61,17 +61,17 @@ body {
 
 
 
-/* poker1 */
-/* fila 124 - columna 79 
+/* poker1
+/* fila 124 - columna 79 */
+
 .carta1{background-position:    0     0  ; }
 .carta2{background-position:  -79px   0  ; }
 .carta3{background-position: -158px   0  ; }
-/*...
+
 .carta14{background-position:    0    -124px; }
 .carta15{background-position:  -79px  -124px; }
 .carta16{background-position:  -158px -124px; }
-/*...
+
 .carta39{background-position:    -948px -248px; }
-/*...
+
 .carta40{background-position:    0   -372px; }
-/*...*/
