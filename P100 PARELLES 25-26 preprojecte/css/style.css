@@ -58,22 +58,7 @@ body {
     transform: rotate3d(0,1,0,0deg);
 }
 
-/* deck */
-/* fila 120 - columna 80) */
-.carta1 {background-position: 0 0;}
-.carta2 {background-position: -80px 0;} 
-.carta3 {background-position: -160px 0;}
-.carta4 {background-position: -240px 0;}
-.carta5 {background-position: -320px 0;}
-/*...*/
-.carta14 {background-position: 0 -120;}
-.carta15 {background-position: -80px -120px;}
-.carta16 {background-position: -160px -120px;}
-/*...*/
-.carta24 {background-position: -800px -120px;}
-.carta25 {background-position: -880px -120px;}
-.carta26 {background-position: -960px -120px;}
-/*...*/
+
 
 
 /* poker1 */
