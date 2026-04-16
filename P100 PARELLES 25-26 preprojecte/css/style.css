@@ -64,14 +64,66 @@ body {
 /* poker1
 /* fila 124 - columna 79 */
 
-.carta1{background-position:    0     0  ; }
-.carta2{background-position:  -79px   0  ; }
-.carta3{background-position: -158px   0  ; }
+/* Fila 1 (Piques) */
+.carta1  { background-position:    0px     0px; }
+.carta2  { background-position:  -79px     0px; }
+.carta3  { background-position: -158px     0px; }
+.carta4  { background-position: -237px     0px; }
+.carta5  { background-position: -316px     0px; }
+.carta6  { background-position: -395px     0px; }
+.carta7  { background-position: -474px     0px; }
+.carta8  { background-position: -553px     0px; }
+.carta9  { background-position: -632px     0px; }
+.carta10 { background-position: -711px     0px; }
+.carta11 { background-position: -790px     0px; }
+.carta12 { background-position: -869px     0px; }
+.carta13 { background-position: -948px     0px; }
 
-.carta14{background-position:    0    -124px; }
-.carta15{background-position:  -79px  -124px; }
-.carta16{background-position:  -158px -124px; }
+/* Fila 2 (Diamants) */
+.carta14 { background-position:    0px  -124px; }
+.carta15 { background-position:  -79px  -124px; }
+.carta16 { background-position: -158px  -124px; }
+.carta17 { background-position: -237px  -124px; }
+.carta18 { background-position: -316px  -124px; }
+.carta19 { background-position: -395px  -124px; }
+.carta20 { background-position: -474px  -124px; }
+.carta21 { background-position: -553px  -124px; }
+.carta22 { background-position: -632px  -124px; }
+.carta23 { background-position: -711px  -124px; }
+.carta24 { background-position: -790px  -124px; }
+.carta25 { background-position: -869px  -124px; }
+.carta26 { background-position: -948px  -124px; }
 
-.carta39{background-position:    -948px -248px; }
+/* Fila 3 (Trèvols) */
+.carta27 { background-position:    0px  -248px; }
+.carta28 { background-position:  -79px  -248px; }
+.carta29 { background-position: -158px  -248px; }
+.carta30 { background-position: -237px  -248px; }
+.carta31 { background-position: -316px  -248px; }
+.carta32 { background-position: -395px  -248px; }
+.carta33 { background-position: -474px  -248px; }
+.carta34 { background-position: -553px  -248px; }
+.carta35 { background-position: -632px  -248px; }
+.carta36 { background-position: -711px  -248px; }
+.carta37 { background-position: -790px  -248px; }
+.carta38 { background-position: -869px  -248px; }
+.carta39 { background-position: -948px  -248px; }
 
-.carta40{background-position:    0   -372px; }
+/* Fila 4 (Cors) */
+.carta40 { background-position:    0px  -372px; }
+.carta41 { background-position:  -79px  -372px; }
+.carta42 { background-position: -158px  -372px; }
+.carta43 { background-position: -237px  -372px; }
+.carta44 { background-position: -316px  -372px; }
+.carta45 { background-position: -395px  -372px; }
+.carta46 { background-position: -474px  -372px; }
+.carta47 { background-position: -553px  -372px; }
+.carta48 { background-position: -632px  -372px; }
+.carta49 { background-position: -711px  -372px; }
+.carta50 { background-position: -790px  -372px; }
+.carta51 { background-position: -869px  -372px; }
+.carta52 { background-position: -948px  -372px; }
+
+/* Revers de la carta */
+.revers  { background-position:    0px  -496px; }
+
