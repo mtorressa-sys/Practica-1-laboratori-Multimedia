@@ -14,9 +14,8 @@ body {
 }
 
 .carta {
-    width: 80px;	height: 120px;   /* deck */
-    /* width: 111px; height: 111px;  /* pokemon */
-    /* width: 79px;	height: 123px;   /* poker1 */
+ 
+    width: 79px;	height: 123px;   /* poker1 */
     
     position: absolute;
     -webkit-perspective: 300px; /* Chrome, Safari, Opera  */
@@ -39,13 +38,11 @@ body {
 }
 
 .darrera {
-    background: #999 url(../images/deck.png) 0px -480px; /*cartes DECK*/
-    /*background: #999 url(../images/poker1.png) 0px -496px; /*cartes POKER1*/
+    background: #999 url(../images/poker1.png) 0px -496px; /*cartes POKER1*/
 }
 
 .davant {
-    background: #efefef url(../images/deck.png);/*cartes DECK*/
-    /*background: #999 url(../images/poker1.png); /*cartes POKER1*/
+    background: #999 url(../images/poker1.png); /*cartes POKER1*/
     transform: rotate3d(0,1,0,-180deg);
 }
 
