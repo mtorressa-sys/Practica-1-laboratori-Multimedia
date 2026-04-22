@@ -15,6 +15,16 @@ var jocCartes = [
 $(function(){
     var f, c, carta;
 
+    // barreja cartes
+    jocCartes.sort(function() { return 0.5 - Math.random() });
+
+    // cartes necessaries
+    var seleccionades = jocCartes.slice(0, (nFiles * nColumnes) / 2);
+
+    // parelles i seleccionades
+    var cartesSeleccionades = seleccionades.concat(seleccionades);
+    cartesSeleccionades.sort(function() { return 0.5 - Math.random() });
+
     ampladaCarta=$(".carta").width(); 
     alcadaCarta=$(".carta").height();
 
@@ -23,6 +33,7 @@ $(function(){
         "width" : (nColumnes*(ampladaCarta+separacioH)+separacioH)+"px",
         "height": (nFiles*(alcadaCarta+separacioV)+separacioV)+"px"
     });
+
     //buidar taulell
     $("#tauler").empty();
     
@@ -44,7 +55,9 @@ $(function(){
                 "top"  : ((f-1)*(alcadaCarta+separacioV)+separacioV)+"px"
             });
 
-            carta.find(".davant").addClass(jocCartes.pop());
+            //parelles seleccionades
+            var finalistes = cartesSeleccionades.pop();
+            carta.find(".davant").addClass(finalistes);
         }
     }
 
