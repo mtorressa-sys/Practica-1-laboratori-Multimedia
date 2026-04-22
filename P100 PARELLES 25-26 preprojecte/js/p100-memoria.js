@@ -3,14 +3,13 @@ var separacioH=20, separacioV=20;
 var nFiles=4, nColumnes=4;
 
 var jocCartes = [
-    'carta1','carta1',
-    'carta2','carta2',
-    'carta3','carta3',
-    'carta4','carta4',
-    'carta5','carta5',
-    'carta6','carta6',
-    'carta7','carta7',
-    'carta8','carta8'
+    'carta1',  'carta2',  'carta3',  'carta4',
+    'carta5',  'carta6',  'carta7',  'carta8',
+    'carta9',  'carta10', 'carta11', 'carta12',
+    'carta13', 'carta14', 'carta15', 'carta16',
+    'carta17', 'carta18', 'carta19', 'carta20',
+    'carta21', 'carta22', 'carta23', 'carta24',
+    'carta25', 'carta26'
 ];
 
 $(function(){
