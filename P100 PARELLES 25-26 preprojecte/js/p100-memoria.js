@@ -24,7 +24,9 @@ $(function(){
         "width" : (nColumnes*(ampladaCarta+separacioH)+separacioH)+"px",
         "height": (nFiles*(alcadaCarta+separacioV)+separacioV)+"px"
     });
-
+    //buidar taulell
+    $("#tauler").empty();
+    
     // CREAR totes les cartes
     for(f=1; f<=nFiles; f++){
         for(c=1; c<=nColumnes; c++){
