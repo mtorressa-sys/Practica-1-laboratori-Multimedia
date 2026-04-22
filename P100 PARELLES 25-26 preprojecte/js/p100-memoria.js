@@ -2,14 +2,15 @@ var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
 var nFiles=4, nColumnes=4;
 
-var totesCartes = [
-    'carta1',  'carta2',  'carta3',  'carta4',
-    'carta5',  'carta6',  'carta7',  'carta8',
-    'carta9',  'carta10', 'carta11', 'carta12',
-    'carta13', 'carta14', 'carta15', 'carta16',
-    'carta17', 'carta18', 'carta19', 'carta20',
-    'carta21', 'carta22', 'carta23', 'carta24',
-    'carta25', 'carta26'
+var jocCartes = [
+    'carta1','carta1',
+    'carta2','carta2',
+    'carta3','carta3',
+    'carta4','carta4',
+    'carta5','carta5',
+    'carta6','carta6',
+    'carta7','carta7',
+    'carta8','carta8'
 ];
 
 $(function(){
@@ -18,15 +19,23 @@ $(function(){
     ampladaCarta=$(".carta").width(); 
     alcadaCarta=$(".carta").height();
 
-    // mida del tauler adaptada a files i columnes
+    // mida del tauler
     $("#tauler").css({
         "width" : (nColumnes*(ampladaCarta+separacioH)+separacioH)+"px",
         "height": (nFiles*(alcadaCarta+separacioV)+separacioV)+"px"
     });
 
-    // posicionar cartes segons files i columnes
+    // CREAR totes les cartes
     for(f=1; f<=nFiles; f++){
         for(c=1; c<=nColumnes; c++){
+
+            $("#tauler").append(
+                '<div class="carta" id="f'+f+'c'+c+'">'+
+                    '<div class="cara davant"></div>'+
+                    '<div class="cara darrera"></div>'+
+                '</div>'
+            );
+
             carta=$("#f"+f+"c"+c);
 
             carta.css({
