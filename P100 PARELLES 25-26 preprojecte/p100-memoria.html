@@ -10,13 +10,18 @@
 <body>
 <header>
     <h1>Memoria cartes - DEMO</h1>
+    <div id="controls">
+        <label for="nivell">Tria la mida del tauler: </label>
+        <select id="nivell">
+            <option value="4">2x2 (4 cartes)</option>
+            <option value="16">4x4 (16 cartes)</option>
+            <option value="36">6x6 (36 cartes)</option>
+        </select>
+        <button id="btn-iniciar">Començar Joc</button>
+    </div>
 </header>
 
-<div id="tauler">
-    <div class="carta" id="f1c1"> <div class="cara darrera"></div><div class="cara davant"></div>	</div>
-    
-
-</div>
+<div id="tauler"></div>
 
 <footer>
     <p>Fes clic en una carta per donar-li la volta</p>
