@@ -78,21 +78,75 @@ function generaTauler() {
         }
     }
 
+    iniciarEvents();
+}
+
+var primeraCarta = null;  // primera carta girada
+var esperant = false; // bloqueig mentre gira la segona carta
+
+function iniciarEvents() {
+
     $(".carta").on("click", function () {
-        $(this).toggleClass("carta-girada");
+
+        // Si estem esperant o la carta ja està girada o eliminada, ignorar clic
+        if (esperant) return;
+        if ($(this).hasClass("carta-girada")) return;
+        if ($(this).hasClass("carta-eliminada")) return;
+
+        $(this).addClass("carta-girada");
+
+        if (primeraCarta === null) {
+            // Primera carta: guardem referència i esperem la segona
+            primeraCarta = $(this);
+
+        } else {
+            // Segona carta: comprovem si és la mateixa figura
+            esperant = true; // bloquegem nous clics mentre comprovem
+
+            var figura1 = primeraCarta.data("figura");
+            var figura2 = $(this).data("figura");
+
+            if (figura1 === figura2) {
+                // PARELLA CORRECTA 
+                // Esperem que acabi de girar i les eliminem
+                var $carta1 = primeraCarta;
+                var $carta2 = $(this);
+
+                setTimeout(function () {
+                    $carta1.addClass("carta-eliminada").fadeOut(400);
+                    $carta2.addClass("carta-eliminada").fadeOut(400);
+                    primeraCarta = null;
+                    esperant     = false;
+                }, 600);
+
+            } else {
+                // PARELLA INCORRECTA 
+                // Esperem que es vegin les dues cartes i les tornem a girar
+                var $carta1 = primeraCarta;
+                var $carta2 = $(this);
+
+                setTimeout(function () {
+                    $carta1.removeClass("carta-girada");
+                    $carta2.removeClass("carta-girada");
+                    primeraCarta = null;
+                    esperant     = false;
+                }, 1000);
+            }
+        }
     });
 }
 
 $(function () {
 
-    // Botó iniciar: llegeix el select i genera el tauler
     $("#btn-iniciar").on("click", function () {
         var valor = $("#select-nivell").val().split("-");
         nFiles    = parseInt(valor[0]);
         nColumnes = parseInt(valor[1]);
+        // Reiniciem estat
+        primeraCarta = null;
+        esperant     = false;
         generaTauler();
     });
 
-    // Genera el tauler per defecte amb els valors inicials de 1a
     generaTauler();
 });
