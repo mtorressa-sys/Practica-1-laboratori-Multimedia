@@ -24,10 +24,19 @@ function barreja(arr) {
     return a;
 }
 
+function actualitzaMarcador() {
+    $("#marcador-parelles").text(parellesEliminades);
+    $("#marcador-clics").text(totalClics);
+    $("#marcador-restants").text(maxClics - totalClics);
+}
+
 function generaTauler() {
 
-    // Reiniciem el comptador de parelles
+    // Reiniciem el comptador de parelles i clics
     parellesEliminades = 0;
+    totalClics = 0;
+    maxClics = nFiles * nColumnes * 3;
+    actualitzaMarcador();
 
     // Barreja i selecciona les parelles necessàries
     var totalCartes     = nFiles * nColumnes;
@@ -87,6 +96,8 @@ function generaTauler() {
 var primeraCarta = null;  // primera carta girada
 var esperant = false; // bloqueig mentre gira la segona carta
 var parellesEliminades = 0; // comptador de parelles trobades
+var totalClics = 0;     // comptador de clics fets
+var maxClics = 0;     // màxim de clics permesos (triple de cartes)
 
 function iniciarEvents() {
 
@@ -98,6 +109,19 @@ function iniciarEvents() {
         if ($(this).hasClass("carta-eliminada")) return;
 
         $(this).addClass("carta-girada");
+
+        // Comptem el clic i actualitzem el marcador
+        totalClics++;
+        actualitzaMarcador();
+
+        // Comprovem si l'usuari ha superat el màxim de clics (derrota)
+        if (totalClics >= maxClics) {
+            setTimeout(function () {
+                $("#missatge-derrota").fadeIn(400);
+            }, 600);
+            esperant = true; // bloquejar més clics
+            return;
+        }
 
         if (primeraCarta === null) {
             // Primera carta: guardem referència i esperem la segona
@@ -124,6 +148,7 @@ function iniciarEvents() {
 
                     // Comprovem si és el final de la partida
                     parellesEliminades++;
+                    actualitzaMarcador();
                     if (parellesEliminades === (nFiles * nColumnes) / 2) {
                         setTimeout(function () {
                             $("#missatge-final").fadeIn(400);
@@ -158,11 +183,19 @@ $(function () {
         primeraCarta = null;
         esperant = false;
         $("#missatge-final").hide();
+        $("#missatge-derrota").hide();
         generaTauler();
     });
 
     $("#btn-tornar").on("click", function () {
         $("#missatge-final").hide();
+        primeraCarta = null;
+        esperant = false;
+        generaTauler();
+    });
+
+    $("#btn-tornar-derrota").on("click", function () {
+        $("#missatge-derrota").hide();
         primeraCarta = null;
         esperant = false;
         generaTauler();

@@ -16,7 +16,6 @@ body {
 .carta {
  
     width: 79px;	height: 123px;   /* poker1 */
-    
     position: absolute;
     -webkit-perspective: 300px; /* Chrome, Safari, Opera  */
     perspective: 300px;/*transition: all .3s; */
@@ -55,33 +54,60 @@ body {
     transform: rotate3d(0,1,0,0deg);
 }
 
-/* Missatge final de partida */
-#missatge-final {
-    margin: 20px auto;
-    padding: 20px 40px;
-    background: #fff;
-    border: 2px solid #666;
-    border-radius: 12px;
-    display: inline-block;
+#marcador {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1em;
+    background: #ffffff;
+    padding: 8px 20px;
+    border-radius: 8px;
+    width: fit-content;
 }
 
-#missatge-final p {
+
+/* Missatge final de partida */
+#missatge-final,
+#missatge-derrota {
+    margin: 20px auto;
+    padding: 20px 40px;
+    background: #ffffff;
+    border: 2px solid #666;
+    display: inline-block;
+    box-shadow: 0 4px 12px #999;
+}
+
+#missatge-final p,
+#missatge-derrota p {
     font-size: 1.5em;
     margin-bottom: 12px;
 }
 
-#btn-tornar {
-    padding: 8px 24px;
+#btn-tornar,
+#btn-tornar-derrota {
+   padding: 8px 24px;
     font-size: 1em;
-    border: 1px solid #555;
-    border-radius: 6px;
-    background: #4a7a4a;
-    color: #fff;
     cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid #555;
+    color: white;
+}
+
+#btn-tornar {
+    background: #4a7a4a;
 }
 
 #btn-tornar:hover {
     background: #3a6a3a;
+}
+
+#btn-tornar-derrota {
+    background: #7a4a4a;
+}
+
+#btn-tornar-derrota:hover {
+    background: #6a3a3a;
 }
 
 
