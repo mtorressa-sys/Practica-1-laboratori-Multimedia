@@ -55,6 +55,36 @@ body {
     transform: rotate3d(0,1,0,0deg);
 }
 
+/* Missatge final de partida */
+#missatge-final {
+    margin: 20px auto;
+    padding: 20px 40px;
+    background: #fff;
+    border: 2px solid #666;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+#missatge-final p {
+    font-size: 1.5em;
+    margin-bottom: 12px;
+}
+
+#btn-tornar {
+    padding: 8px 24px;
+    font-size: 1em;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background: #4a7a4a;
+    color: #fff;
+    cursor: pointer;
+}
+
+#btn-tornar:hover {
+    background: #3a6a3a;
+}
+
+
 /* poker1
 /* fila 123 - columna 79 */
 

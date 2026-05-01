@@ -26,6 +26,9 @@ function barreja(arr) {
 
 function generaTauler() {
 
+    // Reiniciem el comptador de parelles
+    parellesEliminades = 0;
+
     // Barreja i selecciona les parelles necessàries
     var totalCartes     = nFiles * nColumnes;
     var barrejades      = barreja(jocCartes);
@@ -83,6 +86,7 @@ function generaTauler() {
 
 var primeraCarta = null;  // primera carta girada
 var esperant = false; // bloqueig mentre gira la segona carta
+var parellesEliminades = 0; // comptador de parelles trobades
 
 function iniciarEvents() {
 
@@ -116,7 +120,15 @@ function iniciarEvents() {
                     $carta1.addClass("carta-eliminada").fadeOut(400);
                     $carta2.addClass("carta-eliminada").fadeOut(400);
                     primeraCarta = null;
-                    esperant     = false;
+                    esperant = false;
+
+                    // Comprovem si és el final de la partida
+                    parellesEliminades++;
+                    if (parellesEliminades === (nFiles * nColumnes) / 2) {
+                        setTimeout(function () {
+                            $("#missatge-final").fadeIn(400);
+                        }, 500);
+                    }
                 }, 600);
 
             } else {
@@ -129,7 +141,7 @@ function iniciarEvents() {
                     $carta1.removeClass("carta-girada");
                     $carta2.removeClass("carta-girada");
                     primeraCarta = null;
-                    esperant     = false;
+                    esperant = false;
                 }, 1000);
             }
         }
@@ -140,11 +152,19 @@ $(function () {
 
     $("#btn-iniciar").on("click", function () {
         var valor = $("#select-nivell").val().split("-");
-        nFiles    = parseInt(valor[0]);
+        nFiles = parseInt(valor[0]);
         nColumnes = parseInt(valor[1]);
         // Reiniciem estat
         primeraCarta = null;
-        esperant     = false;
+        esperant = false;
+        $("#missatge-final").hide();
+        generaTauler();
+    });
+
+    $("#btn-tornar").on("click", function () {
+        $("#missatge-final").hide();
+        primeraCarta = null;
+        esperant = false;
         generaTauler();
     });
 
