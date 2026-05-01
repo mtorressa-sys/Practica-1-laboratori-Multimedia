@@ -59,7 +59,7 @@ body {
 
 
 /* poker1
-/* fila 123 - columna 79 */
+/* fila 124 - columna 79 */
 
 /* Fila 1 (Piques) */
 .carta1  { background-position:    0px     0px; }
@@ -77,50 +77,50 @@ body {
 .carta13 { background-position: -948px     0px; }
 
 /* Fila 2 (Diamants) */
-.carta14 { background-position:    0px  -123px; }
-.carta15 { background-position:  -79px  -123px; }
-.carta16 { background-position: -158px  -123px; }
-.carta17 { background-position: -237px  -123px; }
-.carta18 { background-position: -316px  -123px; }
-.carta19 { background-position: -395px  -123px; }
-.carta20 { background-position: -474px  -123px; }
-.carta21 { background-position: -553px  -123px; }
-.carta22 { background-position: -632px  -123px; }
-.carta23 { background-position: -711px  -123px; }
-.carta24 { background-position: -790px  -123px; }
-.carta25 { background-position: -869px  -123px; }
-.carta26 { background-position: -948px  -123px; }
+.carta14 { background-position:    0px  -124px; }
+.carta15 { background-position:  -79px  -124px; }
+.carta16 { background-position: -158px  -124px; }
+.carta17 { background-position: -237px  -124px; }
+.carta18 { background-position: -316px  -124px; }
+.carta19 { background-position: -395px  -124px; }
+.carta20 { background-position: -474px  -124px; }
+.carta21 { background-position: -553px  -124px; }
+.carta22 { background-position: -632px  -124px; }
+.carta23 { background-position: -711px  -124px; }
+.carta24 { background-position: -790px  -124px; }
+.carta25 { background-position: -869px  -124px; }
+.carta26 { background-position: -948px  -124px; }
 
 /* Fila 3 (Trèvols) */
-.carta27 { background-position:    0px  -246px; }
-.carta28 { background-position:  -79px  -246px; }
-.carta29 { background-position: -158px  -246px; }
-.carta30 { background-position: -237px  -246px; }
-.carta31 { background-position: -316px  -246px; }
-.carta32 { background-position: -395px  -246px; }
-.carta33 { background-position: -474px  -246px; }
-.carta34 { background-position: -553px  -246px; }
-.carta35 { background-position: -632px  -246px; }
-.carta36 { background-position: -711px  -246px; }
-.carta37 { background-position: -790px  -246px; }
-.carta38 { background-position: -869px  -246px; }
-.carta39 { background-position: -948px  -246px; }
+.carta27 { background-position:    0px  -248px; }
+.carta28 { background-position:  -79px  -248px; }
+.carta29 { background-position: -158px  -248px; }
+.carta30 { background-position: -237px  -248px; }
+.carta31 { background-position: -316px  -248px; }
+.carta32 { background-position: -395px  -248px; }
+.carta33 { background-position: -474px  -248px; }
+.carta34 { background-position: -553px  -248px; }
+.carta35 { background-position: -632px  -248px; }
+.carta36 { background-position: -711px  -248px; }
+.carta37 { background-position: -790px  -248px; }
+.carta38 { background-position: -869px  -248px; }
+.carta39 { background-position: -948px  -248px; }
 
 /* Fila 4 (Cors) */
-.carta40 { background-position:    0px  -369px; }
-.carta41 { background-position:  -79px  -369px; }
-.carta42 { background-position: -158px  -369px; }
-.carta43 { background-position: -237px  -369px; }
-.carta44 { background-position: -316px  -369px; }
-.carta45 { background-position: -395px  -369px; }
-.carta46 { background-position: -474px  -369px; }
-.carta47 { background-position: -553px  -369px; }
-.carta48 { background-position: -632px  -369px; }
-.carta49 { background-position: -711px  -369px; }
-.carta50 { background-position: -790px  -369px; }
-.carta51 { background-position: -869px  -369px; }
-.carta52 { background-position: -948px  -369px; }
+.carta40 { background-position:    0px  -372px; }
+.carta41 { background-position:  -79px  -372px; }
+.carta42 { background-position: -158px  -372px; }
+.carta43 { background-position: -237px  -372px; }
+.carta44 { background-position: -316px  -372px; }
+.carta45 { background-position: -395px  -372px; }
+.carta46 { background-position: -474px  -372px; }
+.carta47 { background-position: -553px  -372px; }
+.carta48 { background-position: -632px  -372px; }
+.carta49 { background-position: -711px  -372px; }
+.carta50 { background-position: -790px  -372px; }
+.carta51 { background-position: -869px  -372px; }
+.carta52 { background-position: -948px  -372px; }
 
 /* Revers de la carta */
-.revers  { background-position:    0px  -492px; }
+.revers  { background-position:    0px  -496px; }
 
