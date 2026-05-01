@@ -66,27 +66,49 @@ body {
     width: fit-content;
 }
 
+/* Compte enrere gran */
+#compte-enrere {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 10px auto;
+    width: fit-content;
+    background: #ffffff;
+    padding: 6px 24px;
+    border-radius: 10px;
+    color: #2a2a2a;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+/* Quan queda poc temps el número es posa vermell */
+#compte-enrere.temps-critic {
+    color: #c0392b;
+}
 
 /* Missatge final de partida */
 #missatge-final,
-#missatge-derrota {
+#missatge-derrota, 
+#missatge-temps{
     margin: 20px auto;
     padding: 20px 40px;
     background: #ffffff;
+    /*border-radius: 12px;*/
     border: 2px solid #666;
     display: inline-block;
     box-shadow: 0 4px 12px #999;
 }
 
 #missatge-final p,
-#missatge-derrota p {
+#missatge-derrota p, 
+#missatge-temps p {
     font-size: 1.5em;
     margin-bottom: 12px;
 }
 
 #btn-tornar,
-#btn-tornar-derrota {
-   padding: 8px 24px;
+#btn-tornar-derrota,
+#btn-tornar-temps {
+    padding: 8px 24px;
     font-size: 1em;
     cursor: pointer;
     border-radius: 6px;
@@ -110,6 +132,13 @@ body {
     background: #6a3a3a;
 }
 
+#btn-tornar-temps {
+    background: #7a5a2a;
+}
+
+#btn-tornar-temps:hover {
+    background: #6a4a1a;
+}
 
 /* poker1
 /* fila 123 - columna 79 */

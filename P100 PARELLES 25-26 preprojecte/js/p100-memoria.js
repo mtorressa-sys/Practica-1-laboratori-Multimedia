@@ -30,25 +30,61 @@ function actualitzaMarcador() {
     $("#marcador-restants").text(maxClics - totalClics);
 }
 
+function actualitzaCompteEnrere() {
+    $("#compte-enrere").text(tempsRestant);
+    // Canvia color quan queda poc temps (menys d'1/4 del total)
+    if (tempsRestant <= Math.floor(tempsTotal / 4)) {
+        $("#compte-enrere").addClass("temps-critic");
+    } else {
+        $("#compte-enrere").removeClass("temps-critic");
+    }
+}
+
+function aturarTimer() {
+    if (intervalTimer !== null) {
+        clearInterval(intervalTimer);
+        intervalTimer = null;
+    }
+}
+
+function iniciarTimer() {
+    aturarTimer(); // per si hi havia un timer anterior actiu
+    intervalTimer = setInterval(function () {
+        tempsRestant--;
+        actualitzaCompteEnrere();
+        if (tempsRestant <= 0) {
+            aturarTimer();
+            esperant = true; // bloquejar més clics
+            setTimeout(function () {
+                $("#missatge-temps").fadeIn(400);
+            }, 300);
+        }
+    }, 1000);
+}
+
 function generaTauler() {
 
     // Reiniciem el comptador de parelles i clics
     parellesEliminades = 0;
     totalClics = 0;
     maxClics = nFiles * nColumnes * 3;
+    tempsTotal = nFiles * nColumnes * 5; // 5 segons per carta
+    tempsRestant = tempsTotal; 
+    aturarTimer();
     actualitzaMarcador();
+    actualitzaCompteEnrere();
 
     // Barreja i selecciona les parelles necessàries
-    var totalCartes     = nFiles * nColumnes;
-    var barrejades      = barreja(jocCartes);
-    var seleccionades   = barrejades.slice(0, totalCartes / 2);
-    var ambParelles     = barreja(seleccionades.concat(seleccionades));
+    var totalCartes = nFiles * nColumnes;
+    var barrejades = barreja(jocCartes);
+    var seleccionades = barrejades.slice(0, totalCartes / 2);
+    var ambParelles = barreja(seleccionades.concat(seleccionades));
 
     // Agafa mides de la carta (existeix al CSS)
     // Fem servir una carta temporal per llegir-ne les mides
     var cartaTemp = $('<div class="carta" style="visibility:hidden"></div>').appendTo("body");
-    ampladaCarta  = cartaTemp.width();
-    alcadaCarta   = cartaTemp.height();
+    ampladaCarta = cartaTemp.width();
+    alcadaCarta = cartaTemp.height();
     cartaTemp.remove();
 
     // Mida del tauler
@@ -96,8 +132,11 @@ function generaTauler() {
 var primeraCarta = null;  // primera carta girada
 var esperant = false; // bloqueig mentre gira la segona carta
 var parellesEliminades = 0; // comptador de parelles trobades
-var totalClics = 0;     // comptador de clics fets
-var maxClics = 0;     // màxim de clics permesos (triple de cartes)
+var totalClics = 0; // comptador de clics fets
+var maxClics = 0; // màxim de clics permesos (triple de cartes)
+var tempsTotal = 0; // temps total de la partida en segons
+var tempsRestant = 0; // temps restant en segons
+var intervalTimer = null; // referència al setInterval del timer
 
 function iniciarEvents() {
 
@@ -116,6 +155,7 @@ function iniciarEvents() {
 
         // Comprovem si l'usuari ha superat el màxim de clics (derrota)
         if (totalClics >= maxClics) {
+            aturarTimer();
             setTimeout(function () {
                 $("#missatge-derrota").fadeIn(400);
             }, 600);
@@ -124,7 +164,8 @@ function iniciarEvents() {
         }
 
         if (primeraCarta === null) {
-            // Primera carta: guardem referència i esperem la segona
+            // Primera carta: arranquem el timer i guardem referència
+            iniciarTimer();
             primeraCarta = $(this);
 
         } else {
@@ -150,6 +191,7 @@ function iniciarEvents() {
                     parellesEliminades++;
                     actualitzaMarcador();
                     if (parellesEliminades === (nFiles * nColumnes) / 2) {
+                        aturarTimer();
                         setTimeout(function () {
                             $("#missatge-final").fadeIn(400);
                         }, 500);
@@ -184,6 +226,7 @@ $(function () {
         esperant = false;
         $("#missatge-final").hide();
         $("#missatge-derrota").hide();
+        $("#missatge-temps").hide();
         generaTauler();
     });
 
@@ -198,6 +241,13 @@ $(function () {
         $("#missatge-derrota").hide();
         primeraCarta = null;
         esperant = false;
+        generaTauler();
+    });
+
+    $("#btn-tornar-temps").on("click", function () {
+        $("#missatge-temps").hide();
+        primeraCarta = null;
+        esperant     = false;
         generaTauler();
     });
 
