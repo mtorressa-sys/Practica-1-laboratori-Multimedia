@@ -1,6 +1,32 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
 
+// Sons del joc
+var sons = {
+    clic:     new Audio('so/clic.mp3'),
+    parella:  new Audio('so/parella.mp3'),
+    error:    new Audio('so/error.mp3'),
+    victoria: new Audio('so/victoria.mp3'),
+    derrota:  new Audio('so/derrota.mp3'),
+    jugar:    new Audio('so/jugar.mp3'),
+    repartir: new Audio('so/repartir.mp3'),
+    tictac:   new Audio('so/tictac.mp3'),
+    temps:    new Audio('so/temps.mp3')
+};
+
+// El tictac va en bucle
+sons.tictac.loop = true;
+
+function reprodueixSo(nom) {
+    sons[nom].currentTime = 0;
+    sons[nom].play();
+}
+
+function aturarSo(nom) {
+    sons[nom].pause();
+    sons[nom].currentTime = 0;
+}
+
 // Configuració de cada baralla
 var baralles = {
     poker1: {
@@ -126,8 +152,10 @@ function actualitzaCompteEnrere() {
     // Canvia color quan queda poc temps (menys d'1/4 del total)
     if (tempsRestant <= Math.floor(tempsTotal / 4)) {
         $("#compte-enrere").addClass("temps-critic");
+        reprodueixSo('tictac'); // arrenca el tictac en bucle
     } else {
         $("#compte-enrere").removeClass("temps-critic");
+        aturarSo('tictac'); // atura el tictac si encara no és crític
     }
 }
 
@@ -136,6 +164,7 @@ function aturarTimer() {
         clearInterval(intervalTimer);
         intervalTimer = null;
     }
+    aturarSo('tictac'); // aturem també el tictac
 }
 
 function iniciarTimer() {
@@ -148,6 +177,7 @@ function iniciarTimer() {
             esperant = true; // bloquejar més clics
             setTimeout(function () {
                 $("#missatge-temps").fadeIn(400);
+                reprodueixSo('temps'); // so diferent per derrota per temps
             }, 300);
         }
     }, 1000);
@@ -207,6 +237,9 @@ function generaTauler() {
             '"></div>'
         );
     }
+
+    // So de repartir cartes
+    reprodueixSo('repartir');
 
     // Crear cartes
     var index = 0;
@@ -279,6 +312,7 @@ function generaTauler() {
     setTimeout(function() {
         // Eliminem la pila visual un cop totes les cartes han volat
         $(".pila-capa").fadeOut(300, function() { $(this).remove(); });
+        aturarSo('repartir'); // aturem el so de repartir
         iniciarEvents();
     }, tempsAnimacio);
 }
@@ -303,6 +337,9 @@ function iniciarEvents() {
 
         $(this).addClass("carta-girada");
 
+        // So de clic en girar la carta
+        reprodueixSo('clic');
+
         // Comptem el clic i actualitzem el marcador
         totalClics++;
         actualitzaMarcador();
@@ -312,6 +349,7 @@ function iniciarEvents() {
             aturarTimer();
             setTimeout(function () {
                 $("#missatge-derrota").fadeIn(400);
+                reprodueixSo('derrota');
             }, 600);
             esperant = true; // bloquejar més clics
             return;
@@ -338,6 +376,7 @@ function iniciarEvents() {
                 setTimeout(function () {
                     $carta1.addClass("carta-eliminada").fadeOut(400);
                     $carta2.addClass("carta-eliminada").fadeOut(400);
+                    reprodueixSo('parella');
                     primeraCarta = null;
                     esperant = false;
 
@@ -348,6 +387,7 @@ function iniciarEvents() {
                         aturarTimer();
                         setTimeout(function () {
                             $("#missatge-final").fadeIn(400);
+                            reprodueixSo('victoria');
                         }, 500);
                     }
                 }, 600);
@@ -361,6 +401,7 @@ function iniciarEvents() {
                 setTimeout(function () {
                     $carta1.removeClass("carta-girada");
                     $carta2.removeClass("carta-girada");
+                    reprodueixSo('error');
                     primeraCarta = null;
                     esperant = false;
                 }, 1000);
@@ -448,6 +489,9 @@ $(function () {
     // Botó Jugar del setup
     $("#btn-jugar").on("click", function () {
         if (!validaConfiguracio()) return;
+
+        // So de jugar
+        reprodueixSo('jugar');
 
         var nCartes = parseInt($("#setup-ncartes").val());
         barallaActual = $("#setup-baralla").val();
