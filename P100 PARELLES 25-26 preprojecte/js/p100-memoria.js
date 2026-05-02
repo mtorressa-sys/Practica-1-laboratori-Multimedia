@@ -1,19 +1,110 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
 
-//modifica per canviar la mida del taulell
-var nFiles=4
-var nColumnes=4;
+// Configuració de cada baralla
+var baralles = {
+    poker1: {
+        fitxer: 'poker1.png',
+        amplada: 79, alcada: 123,
+        maxCartes: 52,
+        reversX: 0, reversY: -492,
+        cartes: (function() {
+            var arr = [];
+            for (var i = 0; i < 52; i++) {
+                arr.push({ x: -(i % 13) * 79, y: -Math.floor(i / 13) * 123 });
+            }
+            return arr;
+        })()
+    },
+    baraja: {
+        fitxer: 'Baraja_española_completa.png',
+        amplada: 208, alcada: 319,
+        maxCartes: 48,
+        reversX: -208, reversY: -1276,
+        cartes: (function() {
+            var arr = [];
+            for (var i = 0; i < 48; i++) {
+                arr.push({ x: -(i % 12) * 208, y: -Math.floor(i / 12) * 319 });
+            }
+            return arr;
+        })()
+    },
+    card_spritesheet: {
+        fitxer: 'card_spritesheet.png',
+        amplada: 160, alcada: 252,
+        maxCartes: 32,
+        reversX: -1280, reversY: -252,
+        cartes: (function() {
+            var arr = [];
+            for (var i = 0; i < 16; i++) {
+                arr.push({ x: -(i % 8) * 160, y: -Math.floor(i / 8) * 252 });
+            }
+            return arr;
+        })()
+    },
+    deck: {
+        fitxer: 'deck.png',
+        amplada: 80, alcada: 120,
+        maxCartes: 52,
+        reversX: 0, reversY: -480,
+        cartes: (function() {
+            var arr = [];
+            for (var i = 0; i < 52; i++) {
+                arr.push({ x: -(i % 13) * 80, y: -Math.floor(i / 13) * 120 });
+            }
+            return arr;
+        })()
+    },
+    pokemon: {
+        fitxer: 'pokemon.jpg',
+        amplada: 111, alcada: 111,
+        maxCartes: 22,
+        reversX: null, reversY: null, // sense revers -> color CSS
+        cartes: (function() {
+            var arr = [];
+            // Fila 0: cols 0-6
+            for (var c = 0; c < 7; c++) arr.push({ x: -c*111, y: 0 });
+            // Fila 1: cols 0-7
+            for (var c = 0; c < 8; c++) arr.push({ x: -c*111, y: -111 });
+            // Fila 2: cols 0-6
+            for (var c = 0; c < 7; c++) arr.push({ x: -c*111, y: -222 });
+            return arr;
+        })()
+    },
+    pokemon2: {
+        fitxer: 'pokemon2.png',
+        amplada: 81, alcada: 81,
+        maxCartes: 144,
+        reversX: null, reversY: null,
+        cartes: (function() {
+            var arr = [];
+            for (var i = 0; i < 144; i++) {
+                arr.push({ x: -(i % 16) * 81, y: -Math.floor(i / 16) * 81 });
+            }
+            return arr;
+        })()
+    },
+    pokemon3: {
+        fitxer: 'pokemon3.png',
+        amplada: 113, alcada: 113,
+        maxCartes: 50,
+        reversX: null, reversY: null,
+        cartes: (function() {
+            var arr = [];
+            for (var fil = 0; fil < 5; fil++)
+                for (var col = 0; col < 9; col++)
+                    arr.push({ x: -(col*114 + 1), y: -(fil*114 + 1) });
+            for (var col = 0; col < 5; col++)
+                arr.push({ x: -(col*114 + 1), y: -(5*114 + 1) });
+            return arr;
+        })()
+    }
+};
 
-var jocCartes = [
-    'carta1',  'carta2',  'carta3',  'carta4',
-    'carta5',  'carta6',  'carta7',  'carta8',
-    'carta9',  'carta10', 'carta11', 'carta12',
-    'carta13', 'carta14', 'carta15', 'carta16',
-    'carta17', 'carta18', 'carta19', 'carta20',
-    'carta21', 'carta22', 'carta23', 'carta24',
-    'carta25', 'carta26'
-];
+// modificables per el taulell inicial
+var barallaActual = 'poker1';
+var nFiles = 4;
+var nColumnes = 4;
 
 function barreja(arr) {
     var a = arr.slice(); // còpia per no modificar l'original
@@ -64,72 +155,135 @@ function iniciarTimer() {
 
 function generaTauler() {
 
+    var baralla = baralles[barallaActual];
+
     // Reiniciem el comptador de parelles i clics
     parellesEliminades = 0;
     totalClics = 0;
     maxClics = nFiles * nColumnes * 3;
     tempsTotal = nFiles * nColumnes * 5; // 5 segons per carta
-    tempsRestant = tempsTotal; 
+    tempsRestant = tempsTotal;
     aturarTimer();
     actualitzaMarcador();
     actualitzaCompteEnrere();
 
     // Barreja i selecciona les parelles necessàries
     var totalCartes = nFiles * nColumnes;
-    var barrejades = barreja(jocCartes);
-    var seleccionades = barrejades.slice(0, totalCartes / 2);
+    var seleccionades = barreja(baralla.cartes.slice()).slice(0, totalCartes / 2);
     var ambParelles = barreja(seleccionades.concat(seleccionades));
 
-    // Agafa mides de la carta (existeix al CSS)
-    // Fem servir una carta temporal per llegir-ne les mides
-    var cartaTemp = $('<div class="carta" style="visibility:hidden"></div>').appendTo("body");
-    ampladaCarta = cartaTemp.width();
-    alcadaCarta = cartaTemp.height();
-    cartaTemp.remove();
+    // Mides de carta des de la baralla activa
+    ampladaCarta = baralla.amplada;
+    alcadaCarta = baralla.alcada;
 
     // Mida del tauler
     $("#tauler").css({
         "width" : (nColumnes * (ampladaCarta + separacioH) + separacioH) + "px",
-        "height": (nFiles    * (alcadaCarta  + separacioV) + separacioV) + "px"
+        "height": (nFiles * (alcadaCarta  + separacioV) + separacioV) + "px"
     });
 
     // Buidar tauler
     $("#tauler").empty();
 
+    // Posició de la pila (cantonada superior esquerra)
+    var pilaLeft = separacioH;
+    var pilaTop = separacioV;
+
+    // Pila visual: diverses capes per simular un manat de cartes
+    var reversStylePila;
+    if (baralla.reversX !== null) {
+        reversStylePila = 'background: #999 url(images/' + baralla.fitxer + ') ' + baralla.reversX + 'px ' + baralla.reversY + 'px;';
+    } else {
+        reversStylePila = 'background: #3a5f8a;';
+    }
+    for (var k = 4; k >= 0; k--) {
+        $("#tauler").append(
+            '<div class="pila-capa" style="' +
+            'position:absolute;' +
+            'width:' + ampladaCarta + 'px;height:' + alcadaCarta + 'px;' +
+            'left:' + (pilaLeft + k) + 'px;top:' + (pilaTop - k) + 'px;' +
+            'border-radius:10px;' +
+            reversStylePila +
+            '"></div>'
+        );
+    }
+
     // Crear cartes
     var index = 0;
+    var cartesCreades = [];
+
     for (var f = 1; f <= nFiles; f++) {
         for (var c = 1; c <= nColumnes; c++) {
 
             var idCarta = "f" + f + "c" + c;
+            var destLeft = ((c - 1) * (ampladaCarta + separacioH) + separacioH);
+            var destTop = ((f - 1) * (alcadaCarta  + separacioV) + separacioV);
+            var figura = ambParelles[index];
+
+            // Estil del revers: sprite o color
+            var reversStyle;
+            if (baralla.reversX !== null) {
+                reversStyle = 'background: #999 url(images/' + baralla.fitxer + ') ' + baralla.reversX + 'px ' + baralla.reversY + 'px;';
+            } else {
+                reversStyle = 'background: #3a5f8a;';
+            }
+
+            // Estil de la carta davant
+            var davantStyle = 'background: #999 url(images/' + baralla.fitxer + ') ' + figura.x + 'px ' + figura.y + 'px;';
 
             $("#tauler").append(
                 '<div class="carta" id="' + idCarta + '">' +
-                    '<div class="cara davant"></div>' +
-                    '<div class="cara darrera"></div>' +
+                    '<div class="cara davant" style="' + davantStyle + '"></div>' +
+                    '<div class="cara darrera" style="' + reversStyle + '"></div>' +
                 '</div>'
             );
 
             var $carta = $("#" + idCarta);
 
+            // Posició inicial: pila (cantonada)
             $carta.css({
-                "left": ((c - 1) * (ampladaCarta + separacioH) + separacioH) + "px",
-                "top" : ((f - 1) * (alcadaCarta  + separacioV) + separacioV) + "px"
+                "width": ampladaCarta + "px",
+                "height": alcadaCarta  + "px",
+                "left": pilaLeft + "px",
+                "top": pilaTop  + "px",
+                "opacity": 0,
+                "transition": "none"
             });
 
-            // Assigna la figura (classe CSS) a la cara del davant
-            $carta.find(".davant").addClass(ambParelles[index]);
-            // Guarda el nom de la figura com a data per comparar després
-            $carta.data("figura", ambParelles[index]);
+            // Guardem coordenades de la figura per comparar parelles
+            $carta.data("figura", figura.x + "," + figura.y);
+            $carta.data("dest-left", destLeft);
+            $carta.data("dest-top", destTop);
 
+            cartesCreades.push($carta);
             index++;
         }
     }
 
-    iniciarEvents();
+    // les cartes volen des de la pila cap a la seva posició
+    cartesCreades.forEach(function($carta, i) {
+        setTimeout(function() {
+            $carta.css({ "opacity": 1, "transition": "none" });
+            setTimeout(function() {
+                $carta.css({
+                    "transition": "left 0.4s ease, top 0.4s ease",
+                    "left": $carta.data("dest-left") + "px",
+                    "top": $carta.data("dest-top")  + "px"
+                });
+            }, 30);
+        }, i * 60);
+    });
+
+    // Esperar que acabi l'animació abans d'activar els events
+    var tempsAnimacio = cartesCreades.length * 60 + 500;
+    setTimeout(function() {
+        // Eliminem la pila visual un cop totes les cartes han volat
+        $(".pila-capa").fadeOut(300, function() { $(this).remove(); });
+        iniciarEvents();
+    }, tempsAnimacio);
 }
 
-var primeraCarta = null;  // primera carta girada
+var primeraCarta = null; // primera carta girada
 var esperant = false; // bloqueig mentre gira la segona carta
 var parellesEliminades = 0; // comptador de parelles trobades
 var totalClics = 0; // comptador de clics fets
@@ -176,7 +330,7 @@ function iniciarEvents() {
             var figura2 = $(this).data("figura");
 
             if (figura1 === figura2) {
-                // PARELLA CORRECTA 
+                // PARELLA CORRECTA
                 // Esperem que acabi de girar i les eliminem
                 var $carta1 = primeraCarta;
                 var $carta2 = $(this);
@@ -199,7 +353,7 @@ function iniciarEvents() {
                 }, 600);
 
             } else {
-                // PARELLA INCORRECTA 
+                // PARELLA INCORRECTA
                 // Esperem que es vegin les dues cartes i les tornem a girar
                 var $carta1 = primeraCarta;
                 var $carta2 = $(this);
@@ -215,13 +369,116 @@ function iniciarEvents() {
     });
 }
 
+// pantalla de setup
+
+function validaConfiguracio() {
+    var barallaTriada = $("#setup-baralla").val();
+    var maxC = baralles[barallaTriada].maxCartes;
+    var val = parseInt($("#setup-ncartes").val());
+    var $err = $("#setup-error");
+
+    if (isNaN(val) || val < 4) {
+        $err.text("El mínim és 4 cartes.").show();
+        return false;
+    }
+    if (val > maxC) {
+        $err.text("Aquesta baralla té un màxim de " + maxC + " cartes.").show();
+        return false;
+    }
+    if (val % 2 !== 0) {
+        $err.text("El nombre de cartes ha de ser parell.").show();
+        return false;
+    }
+    // Comprovar que té una distribució files/columnes vàlida (producte = val, ambdós > 1)
+    var combinacionsValides = combinacionsFiles(val);
+    if (combinacionsValides.length === 0) {
+        $err.text("No hi ha cap distribució files×columnes vàlida per " + val + " cartes.").show();
+        return false;
+    }
+    $err.hide();
+    return true;
+}
+
+function combinacionsFiles(total) {
+    var valides = [];
+    for (var f = 2; f <= total; f++) {
+        if (total % f === 0) {
+            var c = total / f;
+            if (c >= 2) valides.push([f, c]);
+        }
+    }
+    return valides;
+}
+
+function triaMillorDistribucio(total) {
+    // Escollim la combinació més quadrada possible
+    var combinacions = combinacionsFiles(total);
+    var millor = combinacions[0];
+    var minDif = Math.abs(millor[0] - millor[1]);
+    combinacions.forEach(function(comb) {
+        var dif = Math.abs(comb[0] - comb[1]);
+        if (dif < minDif) { minDif = dif; millor = comb; }
+    });
+    return millor;
+}
+
+function actualitzaMaxCartes() {
+    var baralla = $("#setup-baralla").val();
+    var max = baralles[baralla].maxCartes;
+    // El màxim de parelles és maxCartes/2, i el màxim de cartes al tauler és maxCartes
+    // però limitem a un nombre raonable (màx 52 per no fer el tauler gegant)
+    var maxTauler = Math.min(max, 52);
+    // Arrodonir al parell inferior si és imparell
+    if (maxTauler % 2 !== 0) maxTauler--;
+    $("#setup-ncartes").attr("max", maxTauler);
+    $("#setup-max-info").text("(màx " + maxTauler + " per aquesta baralla)");
+    // Validem de nou per actualitzar error si cal
+    validaConfiguracio();
+}
+
 $(function () {
 
+    // Actualitzar màxim quan canvia la baralla
+    $("#setup-baralla").on("change", actualitzaMaxCartes);
+    actualitzaMaxCartes();
+
+    // Validació en temps real del camp de text
+    $("#setup-ncartes").on("input", validaConfiguracio);
+
+    // Botó Jugar del setup
+    $("#btn-jugar").on("click", function () {
+        if (!validaConfiguracio()) return;
+
+        var nCartes = parseInt($("#setup-ncartes").val());
+        barallaActual = $("#setup-baralla").val();
+        var dist = triaMillorDistribucio(nCartes);
+        nFiles = dist[0];
+        nColumnes = dist[1];
+
+        // Amaguem setup, mostrem joc
+        $("#pantalla-setup").hide();
+        $("#pantalla-joc").show();
+
+        primeraCarta = null;
+        esperant = false;
+        generaTauler();
+    });
+
+    // Botons de tornar a jugar -> tornen al setup
+    $("#btn-tornar, #btn-tornar-derrota, #btn-tornar-temps").on("click", function () {
+        $(this).closest("[id^='missatge']").hide();
+        aturarTimer();
+        primeraCarta = null;
+        esperant = false;
+        $("#pantalla-joc").hide();
+        $("#pantalla-setup").show();
+    });
+
+    // Botó iniciar (dins del joc, per canviar nivell sense tornar al setup)
     $("#btn-iniciar").on("click", function () {
         var valor = $("#select-nivell").val().split("-");
         nFiles = parseInt(valor[0]);
         nColumnes = parseInt(valor[1]);
-        // Reiniciem estat
         primeraCarta = null;
         esperant = false;
         $("#missatge-final").hide();
@@ -229,27 +486,4 @@ $(function () {
         $("#missatge-temps").hide();
         generaTauler();
     });
-
-    $("#btn-tornar").on("click", function () {
-        $("#missatge-final").hide();
-        primeraCarta = null;
-        esperant = false;
-        generaTauler();
-    });
-
-    $("#btn-tornar-derrota").on("click", function () {
-        $("#missatge-derrota").hide();
-        primeraCarta = null;
-        esperant = false;
-        generaTauler();
-    });
-
-    $("#btn-tornar-temps").on("click", function () {
-        $("#missatge-temps").hide();
-        primeraCarta = null;
-        esperant     = false;
-        generaTauler();
-    });
-
-    generaTauler();
 });

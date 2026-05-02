@@ -2,8 +2,91 @@ body {
     text-align: center;
     background: #9e9e9e url(../images/fons.webp);
     color: #4A4A4A;
+    margin: 0;
+    padding: 0;
 }
 
+/*Pantalla de setup*/
+#pantalla-setup {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#pantalla-setup h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+#setup-panell {
+    background: #FFFFFFE6;
+    border-radius: 14px;
+    border: 2px solid #666666;
+    padding: 30px 40px;
+    box-shadow: 0 4px 16px #0000004D;
+    min-width: 340px;
+}
+
+#setup-panell h2 {
+    margin: 0 0 20px 0;
+    font-size: 1.3em;
+    color: #333;
+}
+
+.setup-fila {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+
+.setup-fila label {
+    font-weight: bold;
+    min-width: 160px;
+    text-align: right;
+}
+
+.setup-fila select,
+.setup-fila input[type="number"] {
+    padding: 6px 10px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #888;
+    min-width: 180px;
+}
+
+#setup-max-info {
+    font-size: 0.85em;
+    color: #666;
+}
+
+#setup-error {
+    color: #c0392b;
+    font-size: 0.95em;
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+
+#btn-jugar {
+    padding: 10px 32px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid #3a6a3a;
+    background: #4a7a4a;
+    color: white;
+    margin-top: 10px;
+}
+
+#btn-jugar:hover {
+    background: #3a6a3a;
+}
+
+/*Pantalla de joc*/
 #tauler {
     border-radius: 10px;
     border: 1px solid #666;
@@ -14,11 +97,9 @@ body {
 }
 
 .carta {
- 
-    width: 79px;	height: 123px;   /* poker1 */
     position: absolute;
-    -webkit-perspective: 300px; /* Chrome, Safari, Opera  */
-    perspective: 300px;/*transition: all .3s; */
+    -webkit-perspective: 300px;
+    perspective: 300px;
 }
 
 .carta:hover .cara{
@@ -27,21 +108,19 @@ body {
 
 .cara {
     border-radius: 10px;
-    width: 100%;	height: 100%;
-    position: absolute;  /* per poder moure la carta */
-
-    transition-property: transform, shadow;
+    width: 100%; height: 100%;
+    position: absolute;
+    transition-property: transform, box-shadow;
     transition-duration: .5s;
-
     backface-visibility: hidden;
 }
 
 .darrera {
-    background: #999 url(../images/poker1.png) 0px -496px; /*cartes POKER1*/
+    /* el background s'assigna des del JS */
 }
 
 .davant {
-    background: #999 url(../images/poker1.png); /*cartes POKER1*/
+    /* el background s'assigna des del JS */
     transform: rotate3d(0,1,0,-180deg);
 }
 
@@ -54,6 +133,7 @@ body {
     transform: rotate3d(0,1,0,0deg);
 }
 
+/* Marcador */
 #marcador {
     margin: 10px auto;
     display: flex;
@@ -83,6 +163,13 @@ body {
 /* Quan queda poc temps el número es posa vermell */
 #compte-enrere.temps-critic {
     color: #c0392b;
+    animation: parpelleig 0.8s infinite;
+}
+
+@keyframes parpelleig {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.4; }
+    100% { opacity: 1; }
 }
 
 /* Missatge final de partida */
@@ -92,7 +179,7 @@ body {
     margin: 20px auto;
     padding: 20px 40px;
     background: #ffffff;
-    /*border-radius: 12px;*/
+    border-radius: 12px;
     border: 2px solid #666;
     display: inline-block;
     box-shadow: 0 4px 12px #999;
@@ -102,7 +189,7 @@ body {
 #missatge-derrota p, 
 #missatge-temps p {
     font-size: 1.5em;
-    margin-bottom: 12px;
+    margin: 0 0 12px 0;
 }
 
 #btn-tornar,
@@ -116,92 +203,11 @@ body {
     color: white;
 }
 
-#btn-tornar {
-    background: #4a7a4a;
-}
+#btn-tornar { background: #4a7a4a; }
+#btn-tornar:hover { background: #3a6a3a; }
 
-#btn-tornar:hover {
-    background: #3a6a3a;
-}
+#btn-tornar-derrota { background: #7a4a4a; }
+#btn-tornar-derrota:hover { background: #6a3a3a; }
 
-#btn-tornar-derrota {
-    background: #7a4a4a;
-}
-
-#btn-tornar-derrota:hover {
-    background: #6a3a3a;
-}
-
-#btn-tornar-temps {
-    background: #7a5a2a;
-}
-
-#btn-tornar-temps:hover {
-    background: #6a4a1a;
-}
-
-/* poker1
-/* fila 123 - columna 79 */
-
-/* Fila 1 (Piques) */
-.carta1  { background-position:    0px     0px; }
-.carta2  { background-position:  -79px     0px; }
-.carta3  { background-position: -158px     0px; }
-.carta4  { background-position: -237px     0px; }
-.carta5  { background-position: -316px     0px; }
-.carta6  { background-position: -395px     0px; }
-.carta7  { background-position: -474px     0px; }
-.carta8  { background-position: -553px     0px; }
-.carta9  { background-position: -632px     0px; }
-.carta10 { background-position: -711px     0px; }
-.carta11 { background-position: -790px     0px; }
-.carta12 { background-position: -869px     0px; }
-.carta13 { background-position: -948px     0px; }
-
-/* Fila 2 (Diamants) */
-.carta14 { background-position:    0px  -123px; }
-.carta15 { background-position:  -79px  -123px; }
-.carta16 { background-position: -158px  -123px; }
-.carta17 { background-position: -237px  -123px; }
-.carta18 { background-position: -316px  -123px; }
-.carta19 { background-position: -395px  -123px; }
-.carta20 { background-position: -474px  -123px; }
-.carta21 { background-position: -553px  -123px; }
-.carta22 { background-position: -632px  -123px; }
-.carta23 { background-position: -711px  -123px; }
-.carta24 { background-position: -790px  -123px; }
-.carta25 { background-position: -869px  -123px; }
-.carta26 { background-position: -948px  -123px; }
-
-/* Fila 3 (Trèvols) */
-.carta27 { background-position:    0px  -246px; }
-.carta28 { background-position:  -79px  -246px; }
-.carta29 { background-position: -158px  -246px; }
-.carta30 { background-position: -237px  -246px; }
-.carta31 { background-position: -316px  -246px; }
-.carta32 { background-position: -395px  -246px; }
-.carta33 { background-position: -474px  -246px; }
-.carta34 { background-position: -553px  -246px; }
-.carta35 { background-position: -632px  -246px; }
-.carta36 { background-position: -711px  -246px; }
-.carta37 { background-position: -790px  -246px; }
-.carta38 { background-position: -869px  -246px; }
-.carta39 { background-position: -948px  -246px; }
-
-/* Fila 4 (Cors) */
-.carta40 { background-position:    0px  -369px; }
-.carta41 { background-position:  -79px  -369px; }
-.carta42 { background-position: -158px  -369px; }
-.carta43 { background-position: -237px  -369px; }
-.carta44 { background-position: -316px  -369px; }
-.carta45 { background-position: -395px  -369px; }
-.carta46 { background-position: -474px  -369px; }
-.carta47 { background-position: -553px  -369px; }
-.carta48 { background-position: -632px  -369px; }
-.carta49 { background-position: -711px  -369px; }
-.carta50 { background-position: -790px  -369px; }
-.carta51 { background-position: -869px  -369px; }
-.carta52 { background-position: -948px  -369px; }
-
-/* Revers de la carta */
-.revers  { background-position:    0px  -492px; }
+#btn-tornar-temps { background: #7a5a2a; }
+#btn-tornar-temps:hover { background: #6a4a1a; }

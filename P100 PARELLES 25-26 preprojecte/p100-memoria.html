@@ -13,57 +13,77 @@
 
 <body>
 
+    <div id="pantalla-setup">
 
-    <header>
         <h1>Joc de Memòria</h1>
-        
-        <div id="controls-nivell">
+        <div id="setup-panell">
 
-            <label for="select-nivell">Tria el nivell: </label>
+            <h2>Configuració de la partida</h2>
 
-            <select id="select-nivell">
-                <option value="2-2">2×2 (4 cartes)</option>
-                <option value="2-4">2×4 (8 cartes)</option>
-                <option value="3-4">3×4 (12 cartes)</option>
-                <option value="4-4" selected>4×4 (16 cartes)</option>
-            </select>
+            <div class="setup-fila">
+                <label for="setup-baralla">Baralla:</label>
+                <select id="setup-baralla">
+                    <option value="poker1">Poker clàssic</option>
+                    <option value="baraja">Baraja española</option>
+                    <option value="card_spritesheet">Pasqua</option>
+                    <option value="deck">Poker kawaii</option>
+                    <option value="pokemon">Pokémon Shuffle</option>
+                    <option value="pokemon2">Pokémon (sprites)</option>
+                    <option value="pokemon3">Pokémon (icones)</option>
+                </select>
+            </div>
 
-            <button id="btn-iniciar">Iniciar joc</button>
+            <div class="setup-fila">
+                <label for="setup-ncartes">Nombre de cartes:</label>
+                <input type="number" id="setup-ncartes" value="16" min="4" max="52" step="2">
+                <span id="setup-max-info"></span>
+            </div>
+
+            <div id="setup-error"></div>
+
+            <button id="btn-jugar"> Jugar!</button>
 
         </div>
 
-        <div id="marcador">
-            <span>Parelles trobades: <strong id="marcador-parelles">0</strong></span>
-            <span>Clics fets: <strong id="marcador-clics">0</strong></span>
-            <span>Clics restants: <strong id="marcador-restants">0</strong></span>
+    </div>
+
+    <div id="pantalla-joc" style="display:none;">
+
+        <header>
+            <h1>Joc de Memòria</h1>
+            <div id="marcador">
+                <span>Parelles trobades: <strong id="marcador-parelles">0</strong></span>
+                <span>Clics fets: <strong id="marcador-clics">0</strong></span>
+                <span>Clics restants: <strong id="marcador-restants">0</strong></span>
+            </div>
+        </header>
+
+        <div id="compte-enrere">0</div>
+
+        <div id="tauler">
+            //Les cartes es generen per JavaScript
         </div>
 
-    </header>
+        <div id="missatge-final" style="display:none;">
+            <p> Has trobat totes les parelles!</p>
+            <button id="btn-tornar">Torna a jugar</button>
+        </div>
 
-    <div id="compte-enrere">0</div>
+        <div id="missatge-derrota" style="display:none;">
+            <p> Has superat el màxim de clics. Has perdut!</p>
+            <button id="btn-tornar-derrota">Torna a jugar</button>
+        </div>
 
-    <div id="tauler">
-        //Les cartes es generen per JavaScript    
+        <div id="missatge-temps" style="display:none;">
+            <p> S'ha acabat el temps. Has perdut!</p>
+            <button id="btn-tornar-temps">Torna a jugar</button>
+        </div>
+
+        <footer>
+            <p>Fes clic en una carta per donar-li la volta</p>
+        </footer>
+
     </div>
-
-    <div id="missatge-final" style="display:none;">
-        <p> Has trobat totes les parelles!</p>
-        <button id="btn-tornar">Torna a jugar</button>
-    </div>
-
-    <div id="missatge-derrota" style="display:none;">
-        <p>Has superat el màxim de clics. Has perdut!</p>
-        <button id="btn-tornar-derrota">Torna a jugar</button>
-    </div>
-
-    <div id="missatge-temps" style="display:none;">
-        <p>S'ha acabat el temps. Has perdut!</p>
-        <button id="btn-tornar-temps">Torna a jugar</button>
-    </div>
-
-    <footer>
-        <p>Fes clic en una carta per donar-li la volta</p>
-    </footer>
 
 </body>
 
