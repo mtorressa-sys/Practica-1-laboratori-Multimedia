@@ -17,11 +17,13 @@ var sons = {
 // El tictac va en bucle
 sons.tictac.loop = true;
 
+// Posa el so a 0 i fa que comenci
 function reprodueixSo(nom) {
     sons[nom].currentTime = 0;
     sons[nom].play();
 }
 
+// Atura el so i el posa a 0
 function aturarSo(nom) {
     sons[nom].pause();
     sons[nom].currentTime = 0;
@@ -84,27 +86,24 @@ var baralles = {
     pokemon: {
         fitxer: 'pokemon.jpg',
         amplada: 111, alcada: 111,
-        maxCartes: 22,
-        reversX: null, reversY: null, // sense revers -> color CSS
+        maxCartes: 46,
+        reversX: -777, reversY: 0,
         cartes: (function() {
             var arr = [];
-            // Fila 0: cols 0-6
             for (var c = 0; c < 7; c++) arr.push({ x: -c*111, y: 0 });
-            // Fila 1: cols 0-7
             for (var c = 0; c < 8; c++) arr.push({ x: -c*111, y: -111 });
-            // Fila 2: cols 0-6
-            for (var c = 0; c < 7; c++) arr.push({ x: -c*111, y: -222 });
+            for (var c = 0; c < 8; c++) arr.push({ x: -c*111, y: -222 });
             return arr;
         })()
     },
     pokemon2: {
         fitxer: 'pokemon2.png',
         amplada: 81, alcada: 81,
-        maxCartes: 144,
+        maxCartes: 302,
         reversX: null, reversY: null,
         cartes: (function() {
             var arr = [];
-            for (var i = 0; i < 144; i++) {
+            for (var i = 0; i < 151; i++) {
                 arr.push({ x: -(i % 16) * 81, y: -Math.floor(i / 16) * 81 });
             }
             return arr;
@@ -219,7 +218,7 @@ function generaTauler() {
     var pilaLeft = separacioH;
     var pilaTop = separacioV;
 
-    // Pila visual: diverses capes per simular un manat de cartes
+    // Pila visual: diverses capes per simular la pila
     var reversStylePila;
     if (baralla.reversX !== null) {
         reversStylePila = 'background: #999 url(images/' + baralla.fitxer + ') ' + baralla.reversX + 'px ' + baralla.reversY + 'px;';
@@ -418,7 +417,7 @@ function validaConfiguracio() {
     var val = parseInt($("#setup-ncartes").val());
     var $err = $("#setup-error");
 
-    if (isNaN(val) || val < 4) {
+    if (val < 4) {
         $err.text("El mínim és 4 cartes.").show();
         return false;
     }
@@ -466,9 +465,7 @@ function triaMillorDistribucio(total) {
 function actualitzaMaxCartes() {
     var baralla = $("#setup-baralla").val();
     var max = baralles[baralla].maxCartes;
-    // El màxim de parelles és maxCartes/2, i el màxim de cartes al tauler és maxCartes
-    // però limitem a un nombre raonable (màx 52 per no fer el tauler gegant)
-    var maxTauler = Math.min(max, 52);
+    var maxTauler = Math.min(max, 302);
     // Arrodonir al parell inferior si és imparell
     if (maxTauler % 2 !== 0) maxTauler--;
     $("#setup-ncartes").attr("max", maxTauler);
